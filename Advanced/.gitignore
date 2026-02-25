@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+runs/
+frame_*.jpg
+edges_*.jpg
+contours_*.jpg
