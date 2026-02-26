@@ -10,7 +10,7 @@
 from pygments.lexers import Python3Lexer
 import time
 
-project = '占位'
+project = 'LAFVIN ESP32S3 1.69 LCD'
 copyright = f'{time.localtime().tm_year}, LAFVIN'
 author = 'LAFVIN'
 source_encoding = 'utf-8'

@@ -1,10 +1,10 @@
 .. _idf_install:
 
 ESP-IDF Development Environment Setup
-##############################################
+=========================================
 
 Installing VSCode and ESP-IDF Extension
-=======================================
+-----------------------------------------
 First, open the VSCode official website https://code.visualstudio.com/download and select the appropriate system and architecture for download and installation.
 
 .. image:: img/vscode1.png

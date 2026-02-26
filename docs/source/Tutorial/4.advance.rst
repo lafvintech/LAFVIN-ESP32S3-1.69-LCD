@@ -1,38 +1,141 @@
-4.Advance
-==================
+.. _advance_tutorial:
 
-这个章节将由三个进阶ai项目组成,需要提前创建虚拟环境和一些库,你可以使用我们提供的一键安装脚本来创建venv虚拟环境和依赖的pip包
+4. Advanced
+========================
 
-部分一:opencv
+Environment Setup
+-------------------
+
+Before running any project in this chapter, you need to set up a Python virtual environment and install the required dependencies.
+
+#. Open PowerShell or CMD, navigate to the downloaded code directory, then enter the ``Advanced`` folder.
+
+#. Run the setup script:
+
+   .. code-block:: bash
+
+      .\setup.bat
+
+   This will automatically create a ``venv`` virtual environment and install all required pip packages inside it (your system Python environment will not be affected).
+
+#. After installation completes, activate the virtual environment:
+
+   - PowerShell: ``.\venv\Scripts\Activate.ps1``
+   - CMD: ``.\venv\Scripts\activate.bat``
+
+   Once activated, you will see ``(venv)`` at the beginning of the command line.
+
+#. Navigate to the corresponding project directory and run the script:
+
+   .. code-block:: bash
+
+      python <script_name>.py
+
+Part 1: OpenCV
 ---------------------
 
-1.ESP-IDF+Opencv实现图像采集与轮廓处理
+.. note::
+   All OpenCV projects require the UVC webcam firmware. Please flash the ``usb_webcam`` project from the :ref:`ESP-IDF chapter <esp_idf>` to the development board first.
+
+.. note::
+   Make sure the virtual environment is activated before running any project.
+
+For each project below, open VS Code, navigate to the ``Advanced/1.openCV`` directory, right-click and select "Open in Integrated Terminal".
+
+1. Contour Detection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-首先需要烧录IDF章节的usb_webcam项目的摄像头bin文件到开发板,将摄像头的图像通过UVC协议传输到电脑上,电脑端使用openCV实现物体轮廓识别。
 
-接下来打开vscode,打开advance文件夹,选择1.opencv_capture目录,然后点击openCV.py
+Captures images from the UVC camera and uses OpenCV to detect object contours.
 
-注意: 在运行之前,你需要先安装opencv2的库
+Steps:
 
-    1.首先创建虚拟环境,并进入虚拟环境(这个是为了不影响系统的python环境)
+#. Connect the camera to your computer and verify it works using the built-in Camera app.
+#. Run the demo:
 
-    2.使用pip按照opencv2的库
+   .. code-block:: bash
 
-    3.将摄像头连接到电脑上,打开自带的相机软件,确保摄像头可以正常工作
+      python openCV.py
 
-    4.运行openCV.py,你将看到摄像头采集的图像,并且在图像上会有一个绿色的矩形框,opencv2会给物品边缘轮廓描边
+#. You will see the camera feed with green rectangular outlines drawn around detected object edges.
 
+.. .. image:: screenshot
 
-2.ESP-IDF+Yolo5s实现目标检测
-----------------------------------------
-首先需要烧录IDF的章节的usb_webcam项目,用于将摄像头的图像通过UVC协议传输到电脑上,电脑端使用yolo5s实现目标分类
+2. Color Tracking
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-接下来打开vscode,打开advance文件夹,选择2.yolo5s目录,然后点击yolo5s.py
+Captures images from the UVC camera and uses OpenCV for color calibration and tracking.
 
+Steps:
 
+#. Connect the camera to your computer and verify it works using the built-in Camera app.
+#. Run the demo:
 
+   .. code-block:: bash
 
+      python color_tracker.py
 
+#. Two windows will appear. The first window has a crosshair in the center. Aim it at the object whose color you want to track and press ``Space``. OpenCV will then track objects of that color and overlay the result in the first window.
 
-3.接入HomeAssistant实现远程监控
-----------------------------------------
+.. .. image:: screenshot
+
+3. Face Detection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Captures images from the UVC camera and uses OpenCV for real-time face detection.
+
+Steps:
+
+#. Connect the camera to your computer and verify it works using the built-in Camera app.
+#. Run the demo:
+
+   .. code-block:: bash
+
+      python face_detector.py
+
+#. A video window will appear showing detected faces. Press the ``E`` key to toggle eye detection on or off.
+
+.. .. image:: screenshot
+
+Part 2: YOLO
+---------------------
+
+.. note::
+   All YOLO projects require the UVC webcam firmware. Please flash the ``usb_webcam`` project from the :ref:`ESP-IDF chapter <esp_idf>` to the development board first.
+
+For each project below, open VS Code, navigate to the ``Advanced/2.yolo`` directory, right-click and select "Open in Integrated Terminal".
+
+1. Object Recognition (YOLOv5su)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Uses YOLOv5su to perform real-time object detection and classification from the UVC camera feed.
+
+Steps:
+
+#. Connect the camera to your computer and verify it works using the built-in Camera app.
+#. Run the demo:
+
+   .. code-block:: bash
+
+      python 1.yolo_object_recognition.py
+
+#. A video stream window will appear. Point the camera at objects and YOLOv5su will identify and classify them in real time.
+
+.. .. image:: screenshot
+
+2. Pose Estimation (YOLOv8n-pose)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Uses YOLOv8n-pose to perform real-time human body pose estimation from the UVC camera feed.
+
+Steps:
+
+#. Connect the camera to your computer and verify it works using the built-in Camera app.
+#. Run the demo:
+
+   .. code-block:: bash
+
+      python 2.yolo_pose.py
+
+#. A video stream window will appear. Point the camera at a person and the model will detect and display body joint keypoints in real time.
+
+.. .. image:: screenshot

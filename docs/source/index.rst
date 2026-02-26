@@ -10,15 +10,7 @@ Documentation
    :maxdepth: 2
    :caption: Product Information
 
-   about_this_kit <关于开发板>
-   component_list <清单>
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Preparation 
-
-   download_code <github下载代码>
-   firmware <烧录固件>
+   about_this_kit
 
 .. toctree::
    :maxdepth: 1

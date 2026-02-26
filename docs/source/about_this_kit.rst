@@ -1,141 +1,111 @@
-.. _about-this-kit-en:
+.. _about-this-kit:
 
 =====================
-Product Introduction
+About This Kit
 =====================
 
-----------------------
-LAFVIN Retro Game Kit
-----------------------
-
-.. thumbnail:: ./img/other/main_product.png
+.. .. thumbnail:: ./img/other/main_product.png
    :align: center
    :width: 600px
 
 Product Overview
-================
-
-The LAFVIN Retro Game Kit is a retro gaming console kit based on the ESP32S3N16R8 microcontroller. It combines an expansion board, TF card module, amplifier module, and a 2.8-inch TFT display, supporting multiple gaming platform emulators to let you relive the joy of classic games.
-
-This kit uses open-source firmware, supports 13 classic gaming platforms, and provides a complete DIY assembly experience. Whether you're a retro gaming enthusiast, programming learner, or DIY collector, this kit offers a unique experience.
-
-Key Features
-================
-
-.. _key-features-en:
-
-Controller Specifications
---------------------------
-
-* **Main Controller**: ESP32S3N16R8
-* **Flash Capacity**: 16MB
-* **PSRAM Capacity**: 8MB
-* **Processor**: Dual-core Xtensa LX7, up to 240MHz
-* **Wireless Connectivity**: Wi-Fi 802.11 b/g/n and Bluetooth 5.0
-
-Display and Audio
------------------
-
-* **Display**: 2.8-inch TFT color display
-* **Resolution**: 320x240 pixels
-* **Audio Output**: Integrated amplifier module with speaker output
-* **Volume Control**: Software-adjustable volume
-
-Storage and Expansion
-----------------------
-
-* **Storage Method**: TF card (Micro SD card)
-* **Supported Capacity**: Up to 32GB (FAT32 format)
-* **File Management**: Automatic emulator folder structure creation
-
-Power Supply
-------------
-
-* **Power Interface**: Type-C USB port
-* **Power Requirements**: 5V/2A (recommended)
-* **Portability**: Supports power bank charging
-
-Supported Gaming Platforms
-===========================
-
-This kit supports emulators for the following 13 classic gaming platforms:
-
-.. list-table::
-   :header-rows: 1
-   :widths: 30 40 30
-   :align: center
-
-   * - Platform Name
-     - English Name
-     - Supported File Formats
-   * - Nintendo Famicom
-     - NES (Nintendo Entertainment System)
-     - .nes
-   * - Super Nintendo
-     - SNES (Super Nintendo)
-     - .smc, .sfc
-   * - Game Boy
-     - GB (Game Boy)
-     - .gb
-   * - Game Boy Color
-     - GBC (Game Boy Color)
-     - .gbc
-   * - Game & Watch
-     - Game & Watch
-     - Built-in games
-   * - Sega SG-1000
-     - SG-1000
-     - .sg
-   * - Sega Master System
-     - SMS (Sega Master System)
-     - .sms
-   * - Sega MD/Genesis
-     - MD/Genesis (Mega Drive)
-     - .md, .bin
-   * - Sega Game Gear
-     - GG (Game Gear)
-     - .gg
-   * - Colecovision
-     - Colecovision
-     - .col
-   * - PC Engine
-     - PC Engine
-     - .pce
-   * - Atari Lynx
-     - Lynx
-     - .lnx
-   * - DOOM
-     - DOOM
-     - .wad
-
-.. note::
-   Game files need to be prepared by users and placed in the corresponding folders on the TF card.
-
-Application Scenarios
 =====================
 
-.. _applications-en:
+The LAFVIN ESP32S3 1.69 LCD (SKU: LA072) is a compact development board built around the ESP32-S3 microcontroller, featuring a 1.69-inch LCD display, a detachable OV3660 camera module, and onboard RGB LED. It is designed for developers and learners who want to explore AI voice assistants, embedded GUI development, computer vision, and multi-platform programming with Arduino and ESP-IDF.
 
-Retro Gaming Entertainment
----------------------------
+The kit comes with a complete set of tutorials covering Xiaozhi AI, LVGL graphics, OpenCV image processing, and YOLO object detection, making it a versatile platform for hands-on embedded and AI learning.
 
-* Relive classic childhood games and experience the joy of 80s-90s gaming
-* Support for multiple gaming platforms to meet different players' needs
-* Portable design for gaming anytime, anywhere
+Hardware Specifications
+========================
 
-Programming Learning
+Core Module
+-----------
+
+- Chip: ESP32-S3-N16R8
+- Flash: 16MB
+- PSRAM: 8MB
+- Processor: Dual-core Xtensa LX7, up to 240MHz
+- Wireless: Wi-Fi 802.11 b/g/n + Bluetooth 5.0 (LE)
+
+Display
+-----------
+
+- Screen: 1.69-inch TFT LCD
+- Driver: ST7789
+- Resolution: 240 x 280 pixels
+- Interface: SPI
+- Backlight: Software-adjustable
+
+Camera
+-----------
+
+- Sensor: OV3660
+- Connection: Detachable module (FPC connector)
+- Supports UVC protocol for use as a USB webcam
+
+Buttons and LED
+-----------------
+
+- Boot button (GPIO0)
+- Reset button (RST)
+- Power switch (for battery operation)
+- WS2812 addressable RGB LED (on the back)
+
+Interfaces
+-----------
+
+- USB Type-C (power and data)
+- SH1.0-2P battery connector
+- SH1.0-2P speaker connector
+
+Physical Dimensions
 --------------------
 
-* Based on open-source firmware for embedded development learning
-* Understand the working principles of game emulators
-* Practice ESP32S3 application development
+- Size: approx. 31mm x 38mm
 
-DIY Collection
---------------
+What's in the Box
+=====================
 
-* Complete DIY assembly experience to develop hands-on skills
-* Customizable hardware configuration
-* Unique retro gaming console collectible
+.. list-table::
+   :widths: 10 50 20
+   :header-rows: 1
 
-.. note:: 
-   Game ROMs need to be prepared by users. The kit includes all necessary hardware.
+   * - #
+     - Item
+     - Quantity
+   * - 1
+     - LAFVIN ESP32S3 1.69 LCD Development Board
+     - 1
+   * - 2
+     - OV3660 Camera Module
+     - 1
+   * - 3
+     - Speaker
+     - 1
+   * - 4
+     - Type-C USB Cable
+     - 1
+
+
+Tutorials Overview
+=====================
+
+This kit includes tutorials for multiple development platforms and application areas:
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Chapter
+     - Description
+   * - :ref:`Xiaozhi AI <xiaozhi_ai>`
+     - Set up an AI voice assistant using the Xiaozhi open-source firmware
+   * - :ref:`Arduino <arduino_tutorial>`
+     - Display demos, GIF player, WiFi image viewer, LVGL watch face, and LED control
+   * - :ref:`ESP-IDF <esp_idf>`
+     - Low-level development with hello world, blink, USB webcam, and Xiaozhi project
+   * - :ref:`Advanced <advance_tutorial>`
+     - Python-based projects using OpenCV and YOLO with the UVC camera
+
+.. note::
+   Some tutorials require additional software installation (Arduino IDE, ESP-IDF, Python). Please refer to the :ref:`Appendix <appendix>` for setup instructions.

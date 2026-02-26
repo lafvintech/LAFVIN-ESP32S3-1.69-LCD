@@ -79,29 +79,29 @@ Environment Configuration
 ------------------------------------
 First, open the software platform arduino, and then click File in Menus and select Preferences.
 
-.. image:: img/evn_1.png
+.. image:: img/env_1.png
 
 Second, click on the symbol behind "Additional Boards Manager URLs"
 
-.. image:: img/evn_2.png
+.. image:: img/env_2.png
 
 Third, fill in the following URL in the new window, click OK, and click OK on the Preferences window again.
 
    ``https://raw.githubusercontent.com/espressif/arduino-esp32/ghpages/package_esp32_index.json``
 
-.. image:: img/evn_3.png
+.. image:: img/env_3.png
 
-Fourth, click "Boards Manager". Enter “esp32” in Boards manager and select 3.0.4，
+Fourth, click "Boards Manager". Enter “esp32” in Boards manager and select 3.2.0，
 Then click “INSTALL”.
 
-.. image:: img/evn_4.png
+.. image:: img/env_4.png
 
 Arduinowill download these files automaticly. Wait for the installation to complete.
 
-.. image:: img/evn_5.png
+.. image:: img/env_5.png
 
 When finishing installation, click Tools in the Menus again and select Board: 
 "Arduino Uno", and then you can see information of ESP32. click "ESP32-S3 Dev Module" 
 so that the ESP32-S3 programming development environment is configured.
 
-.. image:: img/evn_6.png
+.. image:: img/env_6.png

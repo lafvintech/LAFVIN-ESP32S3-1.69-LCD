@@ -1,3 +1,5 @@
+.. _esp_idf:
+
 3. ESP-IDF
 =================
 
@@ -78,16 +80,16 @@ Connect the device, select the correct COM port and model, and click the flame i
 
 .. image:: img/idf_conf5.png
 
-hello_world
+示例程序
 ----------------------
 
-Hardware Connection
-^^^^^^^^^^^^^^^^^^^^
+hello_world
+^^^^^^^^^^^^^^
 
 Use Type-C Cable connect the board to your computer.
 
 Code Analysis
-^^^^^^^^^^^^^^
+"""""""""""""""
 
 .. code-block:: C
 
@@ -121,21 +123,18 @@ Code Analysis
 - ``esp_restart()``: Software restart.
 
 Run Result
-^^^^^^^^^^^^^^
+"""""""""""""""
 编译和烧录之后打开monitor,能看到定期发送硬件信息到串口
 
 .. image:: 串口信息图片
 
 blink
-----------------------
-
-Hardware Connection
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Use Type-C Cable connect the board to your computer.
 
 Code Analysis
-^^^^^^^^^^^^^^
+"""""""""""""""
 
 .. code-block:: C
 
@@ -160,11 +159,27 @@ Code Analysis
 - ``CONFIG_BLINK_PERIOD``: Blink interval in ms.
 
 Run Result
-^^^^^^^^^^^^^^
+"""""""""""""""
 运行和烧录之后开发板背部的LED灯就会闪烁
 
 .. image:: 开发板背部LED的闪烁GIF
 
+usb_webcam
+^^^^^^^^^^^^^^
 
+Use Type-C Cable connect the board to your computer.
 
-开发板预烧录的固件xiaozhi_ai的项目地址如下,如果对IDF或者项目有兴趣的话可以下载项目并尝试修改配置实现更多功能
+这个是基于乐鑫的官方示例.官方地址在此:https://github.com/espressif/esp-iot-solution
+
+Run Result
+"""""""""""""""
+烧录之后你的esp32s3开发板将会变成一个uvc摄像头,可以充当电脑摄像头
+
+.. image:: 摄像头画面
+
+xiaozhi
+^^^^^^^^^^^^^^
+
+开发板预烧录的固件xiaozhi_ai的项目地址如下,如果对IDF或者项目有兴趣的话可以下载项目并尝试修改配置实现更多功能:
+
+https://drive.google.com/file/d/1Tu95PIAc_TgN5yn74SB_UETjGOM2PxC4/view?usp=sharing

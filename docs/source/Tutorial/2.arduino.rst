@@ -1,5 +1,11 @@
+.. _arduino_tutorial:
+
 2. Arduino
 ================
+.. 还差现象图片
+
+.. tip::
+   All projects in this chapter have pre-compiled firmware available on the :ref:`Online Flasher <online_flasher>`. If you prefer not to wait for compilation, you can flash our pre-built binaries directly.
 
 First, in this section, we need to download the Arduino IDE. You can follow the steps in the section below to install it.
 
