@@ -1,0 +1,426 @@
+2. Arduino
+================
+
+First, in this section, we need to download the Arduino IDE. You can follow the steps in the section below to install it.
+
+:ref:`Install Arduino IDE <install_arduino_ide>`
+
+After installing Arduino IDE and configuring the ESP32 board package according to this tutorial, we can install the libraries required for this project.
+
+Installing Project Libraries
+-----------------------------
+
+You can install the libraries in Arduino by yourself. We also provide related offline zip files. After downloading the code, you can find these two library files in the libraries folder.
+
+.. image:: img/lib.png
+
+You need to open Arduino ‣ Sketch ‣ Include library ‣ Add .zip Library.
+
+.. image:: img/add_ziplib.png
+
+Then in the pop-up window, select each of our offline library files one by one and click install. You may need to perform this process few times to install all the libraries. After that, you can start compiling our project.
+
+Compile Arduino Project
+-----------------------
+
+Let's take the 01_HelloWorld project as an example. Double-click to open 01_HelloWorld.ino. The system will automatically open Arduino IDE. Then, set the port and board type as shown in the images below.
+
+.. image:: img/arduino_set1.png
+
+.. note:: 
+   Make sure the development board is connected to the correct port. You can find the port number in Device Manager.
+
+We also need to adjust the Flash Size to 16MB and partition table: Click Tools in the upper-left corner > Select Partition Scheme > Choose "16M Flash (3MB APP/9.9MB FATFS)".
+
+.. image:: img/arduino_set2.png
+
+.. image:: img/arduino_set3.png
+
+After configuration, click the right arrow button in the upper left corner to start compiling and uploading.
+
+.. image:: img/compile.png
+
+.. attention::  
+   Some programs use LVGL, which may take a long time, so please be patient
+
+01_HelloWorld
+----------------
+
+Basic display test for ESP32-S3 with ST7789 TFT screen.
+
+#. Initialize the SPI display
+#. Show "Hello World!" in red
+#. Every second, display "Hello World!" at random position with random color and size
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+Use Type-C Cable connect the board to your computer.
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init USB Serial (for debug)
+     ├── Init ST7789 display via SPI
+     ├── Turn on backlight
+     └── Show initial "Hello World!"
+
+   loop()
+     ├── Set random cursor position
+     ├── Set random text color
+     ├── Set random text size
+     └── Print "Hello World!"
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic1.png
+
+02_Matrix
+----------------
+
+Matrix-style falling code rain effect.
+
+Creates the iconic "Matrix" digital rain animation with:
+
+- Multiple columns of falling characters
+- White head with green fading trail
+- Random character flickering
+- Variable fall speeds
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init display
+     ├── Initialize column arrays:
+     │   ├── heads[] - vertical position of each column
+     │   ├── speeds[] - fall speed (1-2)
+     │   └── chars[][] - random ASCII characters
+
+   loop()
+     ├── For each column:
+     │   ├── Draw trail (head + fading tail)
+     │   ├── Erase old tail end
+     │   ├── Move head down
+     │   └── Reset to top if off screen
+     └── Delay 50ms
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic2.jpg
+
+03_SimpleWatch
+----------------
+
+Simple digital watch with WiFi time synchronization.
+
+#. Connect to WiFi network
+#. Sync time from NTP server
+#. Display digital clock with date and weekday
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Setup
+^^^^^^^^^^^^^^
+
+Edit ``pin_config.h`` before uploading:
+
+.. code-block:: cpp
+
+   #define WIFI_SSID     "YOUR_WIFI_SSID"
+   #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+   #define GMT_OFFSET    28800   // Your timezone in seconds
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init display
+     ├── Connect to WiFi
+     │   └── Show "Connecting WiFi..."
+     ├── Configure NTP server
+     ├── Wait for time sync
+     └── Draw watch face
+
+   loop()
+     ├── Get current time
+     ├── If second changed:
+     │   └── updateDisplay()
+     │       ├── Draw HH:MM (large)
+     │       ├── Draw SS (small)
+     │       ├── Draw YYYY-MM-DD
+     │       └── Draw weekday
+     └── Delay 100ms
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic3.jpg
+
+04_GFX_WIFIAnalyzer
+----------------------
+
+WiFi signal analyzer with graphical display.
+
+#. Scan nearby WiFi networks every 2 seconds
+#. Display signal strength as arcs on a channel graph
+#. Show SSID and RSSI for strongest network on each channel
+#. Color-coded by channel number
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init display
+     ├── Calculate layout parameters
+     ├── Draw title
+     └── Set WiFi to scan mode
+
+   loop()
+     ├── Scan WiFi networks
+     ├── Clear graph area
+     ├── First pass: find strongest signal per channel
+     ├── Second pass: draw signal arcs
+     │   ├── Map RSSI to arc height
+     │   ├── Draw arc with channel color
+     │   └── Show SSID for peak signal
+     ├── Draw X-axis with channel labels
+     └── Wait 2 seconds
+
+Parameters
+^^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 30 20 50
+   :header-rows: 1
+
+   * - Name
+     - Value
+     - Description
+   * - RSSI_CEILING
+     - -40
+     - Strongest signal (dBm)
+   * - RSSI_FLOOR
+     - -100
+     - Weakest signal (dBm)
+   * - SCAN_INTERVAL
+     - 2000
+     - Scan interval (ms)
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic4.jpg
+
+05_GIF_Player
+----------------
+
+Animated GIF player with WiFi upload capability.
+
+#. Create WiFi hotspot (AP mode)
+#. Serve web page for GIF upload
+#. Save uploaded GIF to flash storage (FFat)
+#. Decode and play GIF animation in loop
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Usage
+^^^^^^^^^^^^^^
+
+#. Upload sketch to ESP32-S3
+#. Connect phone to WiFi: ``GIF_Player`` (password: ``12345678``)
+#. Open browser: ``192.168.4.1``
+#. Upload a GIF file
+#. GIF plays automatically
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init display
+     ├── Init FFat filesystem
+     ├── Create WiFi AP hotspot
+     ├── Start web server
+     ├── Init GIF decoder
+     └── Show waiting screen (if no GIF)
+
+   loop()
+     ├── Handle web requests
+     ├── If uploading: skip playback
+     └── If hasGif:
+         ├── Open GIF file
+         ├── Play frames in loop
+         │   └── Handle web requests between frames
+         └── Close GIF
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic5.jpg
+
+
+06_LVGL_Time
+----------------
+
+Modern watch face using LVGL graphics library with NTP time sync.
+
+#. Connect to WiFi and sync time from NTP server
+#. Display digital clock with animated seconds arc
+#. Show date and weekday
+#. Modern dark theme UI
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Setup
+^^^^^^^^^^^^^^
+
+Edit ``pin_config.h`` before uploading:
+
+.. code-block:: cpp
+
+   #define WIFI_SSID     "YOUR_WIFI_SSID"
+   #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+   #define GMT_OFFSET    28800   // Your timezone in seconds
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+   setup()
+     ├── Init display
+     ├── Init LVGL
+     │   ├── Create display buffer
+     │   └── Register display driver
+     ├── createWatchFace()
+     │   ├── Create outer arc (decoration)
+     │   ├── Create seconds arc (animated)
+     │   ├── Create time label
+     │   ├── Create date label
+     │   ├── Create weekday label
+     │   └── Create status label
+     ├── Connect WiFi
+     ├── Sync NTP time
+     └── Create update timer (500ms)
+
+   loop()
+     └── lv_timer_handler()
+         └── updateTimeCallback()
+             └── updateTimeDisplay()
+
+LVGL Components Used:
+
+- ``lv_arc`` - Circular progress indicator
+- ``lv_label`` - Text display
+- ``lv_timer`` - Periodic callback
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic6.jpg
+
+07_LVGL_LED
+----------------
+
+LVGL interface with WS2812 RGB LED control using button interactions.
+
+- Single click GPIO0 button to change LED to random color
+- Double click GPIO0 button to toggle LED on/off
+- LVGL UI displays current LED status and hex color value
+- Visual LED indicator with glow effect
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+#. **Setup**: Initialize display, LVGL, WS2812 LED, and button
+#. **Create UI**: Build dark-themed interface with circular LED indicator, status label, and color value
+#. **Main Loop**: 
+
+   - Poll button state with debounce logic
+   - Detect single vs double click (300ms timeout)
+   - Update LED hardware and UI on state change
+   - Run LVGL timer handler
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic7.jpg
+
+08_WiFi_ImageViewer
+---------------------
+
+WiFi-based image upload and display. Upload images from phone/computer via web browser.
+
+- Creates WiFi AP hotspot (Image_Viewer)
+- Web interface for image upload
+- Client-side image resize to fit 240x280 screen
+- JPEG decode and centered display
+- New uploads replace previous image
+
+Hardware Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Use Type-C Cable connect the board to your computer.
+
+Usage
+^^^^^^^^^^^^^^
+
+#. Connect to WiFi: ``Image_Viewer`` (password: ``12345678``)
+#. Open browser: ``192.168.4.1``
+#. Select image file (JPG, PNG supported)
+#. Image auto-resizes and uploads
+
+Code Analysis
+^^^^^^^^^^^^^^
+
+#. **Setup**: Initialize display, FFat filesystem, WiFi AP, and web server
+#. **Show Instructions**: Display WiFi name, password, and IP address
+#. **Web Server**: 
+
+   - Serve upload page with JavaScript image processing
+   - Browser resizes image before upload (maintains aspect ratio)
+   - Save uploaded JPEG to FFat filesystem
+
+#. **Display**: Decode JPEG and center on screen
+
+Run Result
+^^^^^^^^^^^^^^
+
+.. image:: img/pic8.jpg
+
