@@ -1,0 +1,21 @@
+targets:
+- esp32s2
+- esp32s3
+- esp32p4
+dependencies:
+  idf:
+    version: '>=5.0'
+  esp32-camera:
+    version: 2.0.15
+  esp32_s3_eye:
+    version: ^2.0.2
+    rules:
+    - if: ${USB_WEBCAM_BOARD} in [esp32_s3_eye]
+  eyes_show:
+    rules:
+    - if: ${USB_WEBCAM_BOARD} in [esp32_s3_eye]
+    override_path: ../eyes_show
+  cmake_utilities: '*'
+  usb_device_uvc:
+    version: 1.2.*
+    override_path: ../../../../../components/usb/usb_device_uvc
