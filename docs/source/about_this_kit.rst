@@ -11,7 +11,7 @@ About This Kit
 Product Overview
 =====================
 
-The LAFVIN ESP32S3 1.69 LCD (SKU: LA072) is a compact development board built around the ESP32-S3 microcontroller, featuring a 1.69-inch LCD display, a detachable OV3660 camera module, and onboard RGB LED. It is designed for developers and learners who want to explore AI voice assistants, embedded GUI development, computer vision, and multi-platform programming with Arduino and ESP-IDF.
+The LAFVIN ESP32S3 1.69 LCD is a compact development board built around the ESP32-S3 microcontroller, featuring a 1.69-inch LCD display, a detachable OV3660 camera module, and onboard RGB LED. It is designed for developers and learners who want to explore AI voice assistants, embedded GUI development, computer vision, and multi-platform programming with Arduino and ESP-IDF.
 
 The kit comes with a complete set of tutorials covering Xiaozhi AI, LVGL graphics, OpenCV image processing, and YOLO object detection, making it a versatile platform for hands-on embedded and AI learning.
 
