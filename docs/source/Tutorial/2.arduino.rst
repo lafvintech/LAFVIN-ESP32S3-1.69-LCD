@@ -361,8 +361,8 @@ Run Result
 
 LVGL interface with WS2812 RGB LED control using button interactions.
 
-- Single click GPIO0 button to change LED to random color
-- Double click GPIO0 button to toggle LED on/off
+- Single click Boot button to change LED to random color
+- Double click Boot button to toggle LED on/off
 - LVGL UI displays current LED status and hex color value
 - Visual LED indicator with glow effect
 
