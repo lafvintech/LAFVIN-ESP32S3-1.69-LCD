@@ -58,7 +58,7 @@ Steps:
 
 #. You will see the camera feed with green rectangular outlines drawn around detected object edges.
 
-.. .. image:: screenshot
+.. image:: img/advanced/opencv.png
 
 2. Color Tracking
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -76,7 +76,7 @@ Steps:
 
 #. Two windows will appear. The first window has a crosshair in the center. Aim it at the object whose color you want to track and press ``Space``. OpenCV will then track objects of that color and overlay the result in the first window.
 
-.. .. image:: screenshot
+.. image:: img/advanced/opencv_color.png
 
 3. Face Detection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -90,11 +90,11 @@ Steps:
 
    .. code-block:: bash
 
-      python face_detector.py
+      python face_detector.py --model models/res10_300x300_ssd_iter_140000.caffemodel --config models/deploy.prototxt --conf 0.6
 
-#. A video window will appear showing detected faces. Press the ``E`` key to toggle eye detection on or off.
+#. A video window will appear showing detected faces.
 
-.. .. image:: screenshot
+.. image:: img/advanced/opencv_face.png
 
 Part 2: YOLO
 ---------------------
@@ -120,7 +120,7 @@ Steps:
 
 #. A video stream window will appear. Point the camera at objects and YOLOv5su will identify and classify them in real time.
 
-.. .. image:: screenshot
+.. image:: img/advanced/yolo1.png
 
 2. Pose Estimation (YOLOv8n-pose)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -138,4 +138,4 @@ Steps:
 
 #. A video stream window will appear. Point the camera at a person and the model will detect and display body joint keypoints in real time.
 
-.. .. image:: screenshot
+.. image:: img/advanced/yolo2.png
