@@ -4,78 +4,81 @@ import os
 
 
 class FaceDetector:
-    def __init__(self, camera_index=0):
+    def __init__(
+        self,
+        camera_index=0,
+        model_path=None,
+        config_path=None,
+        conf_threshold=0.6,
+        input_size=300,
+        backend=cv2.dnn.DNN_BACKEND_DEFAULT,
+        target=cv2.dnn.DNN_TARGET_CPU,
+    ):
         self.cap = cv2.VideoCapture(camera_index)
         if not self.cap.isOpened():
             raise RuntimeError("Failed to open the camera")
 
-        # LBP cascade path: same parent dir as haarcascades
-        data_dir = os.path.dirname(cv2.data.haarcascades)
-        lbp_path = os.path.join(data_dir, "lbpcascades", "lbpcascade_frontalface_improved.xml")
+        self.conf_threshold = conf_threshold
+        self.input_size = input_size
 
-        # Use LBP cascade (more robust with glasses) as primary
-        self.face_cascade_lbp = cv2.CascadeClassifier(lbp_path)
-        # If LBP not available, fall back to Haar only
-        self.lbp_available = not self.face_cascade_lbp.empty()
+        if model_path is None or config_path is None:
+            raise RuntimeError(
+                "DNN model files not set. Provide --model and --config paths."
+            )
 
-        # Haar as fallback
-        self.face_cascade_haar = cv2.CascadeClassifier(
-            cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        )
-        self.eye_cascade = cv2.CascadeClassifier(
-            cv2.data.haarcascades + "haarcascade_eye_tree_eyeglasses.xml"
-        )
-
-        self.detect_eyes = True
-        self.use_lbp = self.lbp_available
+        self.net = cv2.dnn.readNetFromCaffe(config_path, model_path)
+        self.net.setPreferableBackend(backend)
+        self.net.setPreferableTarget(target)
 
         cv2.namedWindow("Face Detection", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Face Detection", 640, 480)
 
     def detect(self, frame):
-        """Detect faces using dual-cascade strategy"""
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # CLAHE for better contrast (works better than simple equalizeHist)
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-        gray = clahe.apply(gray)
+        h, w = frame.shape[:2]
+        blob = cv2.dnn.blobFromImage(
+            cv2.resize(frame, (self.input_size, self.input_size)),
+            1.0,
+            (self.input_size, self.input_size),
+            (104.0, 177.0, 123.0),
+        )
+        self.net.setInput(blob)
+        detections = self.net.forward()
 
-        # Try LBP first (faster, better with glasses), fallback to Haar
-        if self.use_lbp:
-            faces = self.face_cascade_lbp.detectMultiScale(
-                gray, scaleFactor=1.1, minNeighbors=4, minSize=(80, 80)
+        face_count = 0
+        for i in range(detections.shape[2]):
+            confidence = float(detections[0, 0, i, 2])
+            if confidence < self.conf_threshold:
+                continue
+
+            box = detections[0, 0, i, 3:7] * [w, h, w, h]
+            (x1, y1, x2, y2) = box.astype("int")
+            x1 = max(0, x1)
+            y1 = max(0, y1)
+            x2 = min(w - 1, x2)
+            y2 = min(h - 1, y2)
+
+            face_count += 1
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(
+                frame,
+                f"Face {confidence:.2f}",
+                (x1, y1 - 8),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                (0, 255, 0),
+                2,
             )
-            method = "LBP"
-        else:
-            faces = self.face_cascade_haar.detectMultiScale(
-                gray, scaleFactor=1.1, minNeighbors=6, minSize=(80, 80)
-            )
-            method = "Haar"
 
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv2.putText(frame, "Face", (x, y - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-
-            if self.detect_eyes:
-                # Search eyes only in upper 60% of face region
-                eye_h = int(h * 0.6)
-                roi_gray = gray[y:y + eye_h, x:x + w]
-                roi_color = frame[y:y + eye_h, x:x + w]
-                eyes = self.eye_cascade.detectMultiScale(
-                    roi_gray, scaleFactor=1.05, minNeighbors=6, minSize=(25, 25)
-                )
-                # Keep at most 2 eyes
-                eyes = sorted(eyes, key=lambda e: e[2] * e[3], reverse=True)[:2]
-                for (ex, ey, ew, eh) in eyes:
-                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (255, 0, 0), 2)
-
-        face_count = len(faces)
-        eye_status = "Eyes: ON" if self.detect_eyes else "Eyes: OFF"
-        info = f"Faces: {face_count} | {method} | {eye_status}"
-        cv2.putText(frame, info, (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-        cv2.putText(frame, "e: toggle eyes | m: switch model | q: quit",
-                    (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        info = f"Faces: {face_count} | DNN | conf>={self.conf_threshold:.2f}"
+        cv2.putText(
+            frame,
+            info,
+            (10, 30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (255, 255, 255),
+            2,
+        )
         return frame
 
     def run(self):
@@ -89,13 +92,8 @@ class FaceDetector:
                 cv2.imshow("Face Detection", result)
 
                 key = cv2.waitKey(1) & 0xFF
-                if key == ord('q'):
+                if key == ord("q"):
                     break
-                elif key == ord('e'):
-                    self.detect_eyes = not self.detect_eyes
-                elif key == ord('m'):
-                    if self.lbp_available:
-                        self.use_lbp = not self.use_lbp
 
                 if cv2.getWindowProperty("Face Detection", cv2.WND_PROP_VISIBLE) < 1:
                     break
@@ -105,12 +103,53 @@ class FaceDetector:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="OpenCV Face Detection Demo")
+    parser = argparse.ArgumentParser(description="OpenCV DNN Face Detection Demo")
     parser.add_argument("-c", "--camera", type=int, default=0, help="Camera index (default: 0)")
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=False,
+        default="models/res10_300x300_ssd_iter_140000.caffemodel",
+        help="Path to Caffe .caffemodel",
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        required=False,
+        default="models/deploy.prototxt",
+        help="Path to Caffe .prototxt",
+    )
+    parser.add_argument(
+        "--conf",
+        type=float,
+        default=0.6,
+        help="Confidence threshold (default: 0.6)",
+    )
+    parser.add_argument(
+        "--size",
+        type=int,
+        default=300,
+        help="Input size for DNN (default: 300)",
+    )
     args = parser.parse_args()
 
+    model_path = os.path.abspath(args.model)
+    config_path = os.path.abspath(args.config)
+
+    if not os.path.isfile(model_path) or not os.path.isfile(config_path):
+        raise RuntimeError(
+            "Model files not found. Please place the Caffe model and config at:"
+            f"\n  {model_path}\n  {config_path}"
+        )
+
     try:
-        detector = FaceDetector(camera_index=args.camera)
+        detector = FaceDetector(
+            camera_index=args.camera,
+            model_path=model_path,
+            config_path=config_path,
+            conf_threshold=args.conf,
+            input_size=args.size,
+        )
         detector.run()
     except Exception as e:
         print(f"Program error: {e}")
