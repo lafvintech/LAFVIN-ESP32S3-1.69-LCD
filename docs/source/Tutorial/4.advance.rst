@@ -58,7 +58,7 @@ Steps:
 
 #. You will see the camera feed with green rectangular outlines drawn around detected object edges.
 
-.. image:: img/advanced/opencv.png
+.. image:: img/advanced/opencv.jpg
 
 2. Color Tracking
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
