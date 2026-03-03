@@ -2,16 +2,18 @@
 
 2. Arduino
 ================
-.. 还差现象图片
 
 .. tip::
-   All projects in this chapter have pre-compiled firmware available on the :ref:`Online Flasher <online_flasher>`. If you prefer not to wait for compilation, you can flash our pre-built binaries directly.
+  All projects in this chapter have pre-compiled firmware available on the :ref:`Online Flasher <online_flasher>`. If you prefer not to wait for compilation, you can flash our pre-built binaries directly.
 
 First, in this section, we need to download the Arduino IDE. You can follow the steps in the section below to install it.
 
 :ref:`Install Arduino IDE <install_arduino_ide>`
 
 After installing Arduino IDE and configuring the ESP32 board package according to this tutorial, we can install the libraries required for this project.
+
+.. attention:: 
+  代码需要稳定的供电,建议使用带有至少5v2A的适配器或者标准USB3.0接口,否则程序可能会闪退,你也可以使用带有SH1.0-2P接口的3.7V锂电池用于供电
 
 Installing Project Libraries
 -----------------------------
@@ -52,7 +54,7 @@ After configuration, click the right arrow button in the upper left corner to st
 01_HelloWorld
 ----------------
 
-Basic display test for ESP32-S3 with ST7789 TFT screen.
+Based on the Arduino_GFX_Library HelloWorld example, adapted for an ESP32‑S3 board with an ST7789 TFT display. The sketch repeatedly renders “Hello World” text on the screen to verify the display driver, SPI wiring, and basic drawing performance.
 
 #. Initialize the SPI display
 #. Show "Hello World!" in red
@@ -82,13 +84,12 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic1.png
+.. image:: img/arduino/01.jpg
 
 02_Matrix
 ----------------
 
-Matrix-style falling code rain effect.
-
+A “hacker/Matrix” style code‑rain animation built with Arduino_GFX_Library. ASCII characters continuously fall from the top of the screen with random columns and speeds, creating a classic green terminal rain visual effect.
 Creates the iconic "Matrix" digital rain animation with:
 
 - Multiple columns of falling characters
@@ -124,12 +125,12 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic2.jpg
+ .. image:: img/arduino/02.jpg
 
 03_SimpleWatch
 ----------------
 
-Simple digital watch with WiFi time synchronization.
+A simple digital clock implemented with Arduino_GFX_Library. It connects to Wi‑Fi, synchronizes time via NTP, and displays the current time on the screen with automatic periodic re-sync for better accuracy.
 
 #. Connect to WiFi network
 #. Sync time from NTP server
@@ -177,12 +178,12 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic3.jpg
+.. image:: img/arduino/03.jpg
 
 04_GFX_WIFIAnalyzer
 ----------------------
 
-WiFi signal analyzer with graphical display.
+04_GFX_WIFIAnalyzer is a signal analysis tool designed for the ESP32-S3 with a 240×280 ST7789 display, powered by the Arduino_GFX_Library. It scans Wi-Fi channels 1–14 every 2000ms, visualizing signal distribution through intuitive RSSI-based arc heights.
 
 #. Scan nearby WiFi networks every 2 seconds
 #. Display signal strength as arcs on a channel graph
@@ -239,7 +240,7 @@ Parameters
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic4.jpg
+.. image:: img/arduino/04.jpg
 
 05_GIF_Player
 ----------------
@@ -290,13 +291,15 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic5.jpg
-
+.. video:: img/arduino/05.mp4
+   :width: 600
+   :height: 450
+   :align: center
 
 06_LVGL_Time
 ----------------
 
-Modern watch face using LVGL graphics library with NTP time sync.
+A modern watch‑style UI built with the LVGL graphics library. It connects to Wi‑Fi, synchronizes time using NTP, and displays a sleek watch face (time/date/weekday) with a clean, modern visual style.
 
 #. Connect to WiFi and sync time from NTP server
 #. Display digital clock with animated seconds arc
@@ -306,7 +309,7 @@ Modern watch face using LVGL graphics library with NTP time sync.
 Hardware Connection
 ^^^^^^^^^^^^^^^^^^^^
 
-Use Type-C Cable connect the board to your computer.
+06_LVGL_Time is a sophisticated digital clock implementation designed for the ESP32-S3 paired with a 240×280 ST7789 display. Leveraging the powerful LVGL (v8.x) graphics library and the Arduino_GFX_Library, this demo showcases a sleek, "dark-mode" watch face with high-performance rendering.
 
 Setup
 ^^^^^^^^^^^^^^
@@ -354,12 +357,12 @@ LVGL Components Used:
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic6.jpg
+.. image:: img/arduino/06.jpg
 
 07_LVGL_LED
 ----------------
 
-LVGL interface with WS2812 RGB LED control using button interactions.
+07_LVGL_LED is a sophisticated integration demo for the ESP32-S3, combining physical hardware control with a modern LVGL (v8.x) graphical interface. It allows users to manage a WS2812 RGB LED using a single hardware button (GPIO0) while receiving real-time visual feedback on a 240x280 ST7789 display.
 
 - Single click Boot button to change LED to random color
 - Double click Boot button to toggle LED on/off
@@ -386,18 +389,24 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic7.jpg
+.. image:: img/arduino/07.jpg
 
 08_WiFi_ImageViewer
 ---------------------
 
-WiFi-based image upload and display. Upload images from phone/computer via web browser.
+08_WiFi_ImageViewer is a versatile image hosting and display demo for the ESP32-S3. It transforms the device into a standalone wireless photo frame that allows users to upload and view images via a localized web portal.
 
 - Creates WiFi AP hotspot (Image_Viewer)
 - Web interface for image upload
 - Client-side image resize to fit 240x280 screen
 - JPEG decode and centered display
 - New uploads replace previous image
+
+
+What makes this version unique (vs. 05_GIF_Player):
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unlike the GIF Player, this project features intelligent client-side preprocessing. When you select an image (JPG/PNG) on your phone or PC, the hosted web page uses HTML5 Canvas to automatically resize and crop the image to exactly 240×280 before the upload begins. This clever optimization minimizes WiFi transmission time, saves storage space in the FFat filesystem, and ensures the JPEGDEC library can render the image perfectly without exceeding memory limits.
 
 Hardware Connection
 ^^^^^^^^^^^^^^^^^^^^
@@ -428,5 +437,5 @@ Code Analysis
 Run Result
 ^^^^^^^^^^^^^^
 
-.. image:: img/pic8.jpg
+.. image:: img/arduino/08.jpg
 
