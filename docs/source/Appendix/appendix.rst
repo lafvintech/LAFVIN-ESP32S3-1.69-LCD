@@ -9,4 +9,3 @@ Appendix
    download_code
    arduino_ins
    idf_ins
-   online_flasher

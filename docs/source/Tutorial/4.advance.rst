@@ -53,7 +53,7 @@ Steps:
 #. Run the demo:
 
    .. code-block:: bash
-
+                                                                                                                                          
       python openCV.py
 
 #. You will see the camera feed with green rectangular outlines drawn around detected object edges.

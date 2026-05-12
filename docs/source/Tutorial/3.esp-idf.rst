@@ -80,7 +80,7 @@ Connect the device, select the correct COM port and model, and click the flame i
 
 .. image:: img/idf_conf5.png
 
-示例程序
+Sample Program
 ----------------------
 
 hello_world
@@ -170,6 +170,7 @@ Run Result
 After running and burning the code, the WS2812 LEDs on the back of the development board will flash.
 
 .. video:: img/idf/blink.mp4
+  :width: 100%
 
 i2s_mic_speaker
 ^^^^^^^^^^^^^^^^^^

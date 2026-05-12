@@ -13,7 +13,7 @@ First, in this section, we need to download the Arduino IDE. You can follow the 
 After installing Arduino IDE and configuring the ESP32 board package according to this tutorial, we can install the libraries required for this project.
 
 .. attention:: 
-  代码需要稳定的供电,建议使用带有至少5v2A的适配器或者标准USB3.0接口,否则程序可能会闪退,你也可以使用带有SH1.0-2P接口的3.7V锂电池用于供电
+  The device requires a stable power supply. We recommend using an adapter rated at least 5V/2A or a standard USB 3.0 port; otherwise, the program may crash unexpectedly. You can also use a 3.7V lithium battery with an SH1.0-2P connector for power.
 
 Installing Project Libraries
 -----------------------------

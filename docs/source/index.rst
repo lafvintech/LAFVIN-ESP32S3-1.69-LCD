@@ -14,6 +14,12 @@ Documentation
 
 .. toctree::
    :maxdepth: 1
+   :caption: Online Flasher
+
+   Appendix/online_flasher
+
+.. toctree::
+   :maxdepth: 1
    :caption: Tutorial
 
    Tutorial/tutorial
